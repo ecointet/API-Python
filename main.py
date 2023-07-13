@@ -8,7 +8,9 @@ import postman_sdk as pm
 
 pm.initialize({
     'collection_id': os.environ["COLLECTION_UID"],
-    'api_key':  os.environ["API_KEY"]
+    'api_key':  os.environ["API_KEY"],
+    'truncateData': "true",
+    'debug': "true"
 })
 
 
