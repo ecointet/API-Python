@@ -4,6 +4,8 @@ import signal
 from flask import Flask
 from flask import jsonify
 
+import requests
+
 import postman_sdk as pm
 
 pm.initialize({
@@ -49,6 +51,12 @@ def show_explore(city):
 def show_kill():
   #returns the post, the post_id should be an int
     os.kill(os.getppid(), signal.SIGTERM)
+
+@app.route('/debug')
+def show_debug():
+  site_request = requests.get("https://trace-receiver.postman.com/")
+  site_response = str(site_request.content)
+  return site_response
 
 @app.route('/collection/<uid>')
 def show_collection(uid):
