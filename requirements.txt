@@ -1,3 +1,3 @@
 Flask==2.1.0
 gunicorn==20.1.0
-postman-sdk>=0.0.12
+postman-sdk==0.0.12
