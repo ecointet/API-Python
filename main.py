@@ -32,13 +32,18 @@ def show_ip(ip):
 
 @app.route('/details/<countryCode>')
 def show_country(countryCode):
-  #returns the post, the post_id should be an int
+  #returns the CountryCode
     return jsonify(response="ok",desc="Get details about a Country Code",CountryCode=str(countryCode))
 
 @app.route('/chatgpt/<city>')
 def show_city(city):
-  #returns the post, the post_id should be an int
+  #returns the city
     return jsonify(response="ok", desc="Get a short sentence about a city (AI generated)", city=str(city))
+
+@app.route('/explore/<city>')
+def show_explore(city):
+  #returns the city
+    return jsonify(response="ok", desc="Explore the world with the city of your choice", city=str(city))
 
 @app.route('/kill')
 def show_kill():
