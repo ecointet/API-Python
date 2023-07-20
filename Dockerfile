@@ -1,21 +1,20 @@
-# Use the official lightweight Python image.
-# https://hub.docker.com/_/python
-FROM python:3.11-slim
+# Use the official lightweight Node.js 12 image.
+# https://hub.docker.com/_/node
+FROM node:12-slim
 
-# Allow statements and log messages to immediately appear in the logs
-ENV PYTHONUNBUFFERED True
+# Create and change to the app directory.
+WORKDIR /usr/src/app
 
-# Copy local code to the container image.
-ENV APP_HOME /app
-WORKDIR $APP_HOME
-COPY . ./
+# Copy application dependency manifests to the container image.
+# A wildcard is used to ensure both package.json AND package-lock.json are copied.
+# Copying this separately prevents re-running npm install on every code change.
+COPY package*.json ./
 
 # Install production dependencies.
-RUN pip install --no-cache-dir -r requirements.txt
+RUN npm install --only=production
 
-# Run the web service on container startup. Here we use the gunicorn
-# webserver, with one worker process and 8 threads.
-# For environments with multiple CPU cores, increase the number of workers
-# to be equal to the cores available.
-# Timeout is set to 0 to disable the timeouts of the workers to allow Cloud Run to handle instance scaling.
-CMD exec gunicorn --bind :$PORT --workers 1 --threads 8 --timeout 0 main:app --reload
+# Copy local code to the container image.
+COPY . ./
+
+# Run the web service on container startup.
+CMD [ "npm", "start" ]
